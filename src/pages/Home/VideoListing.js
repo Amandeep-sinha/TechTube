@@ -1,20 +1,38 @@
 import "./VideoListing.css";
-import React from "react";
+import React , {useState} from "react";
 import VideoCard from "./components/VideoCard";
+import { useData } from "../../context/data/videoContext";
+import { ACTION_TYPE } from "../../utils";
+import { searchVideos, sortVideos } from "../../services";
 
 export function VideoListing() {
+  const { category, videos, dispatch, sortBy, search } = useData();
+
+  const sortHandler = (catName) => {
+    dispatch({ type: ACTION_TYPE.SORT_BY, payload: catName });
+  };
+
+  const searchByName = searchVideos([...videos], search);
+  const sortByCategory = sortVideos(searchByName, sortBy);
+  
   return (
     <div className="video-list-container">
       <div className="category-list">
-        <div className="category">All</div>
-        <div className="category">HTML</div>
-        <div className="category">CSS</div>
-        <div className="category">JAVASCRIPT</div>
-        <div className="category">REACT</div>
+      {category.map(({ _id, categoryName, isActive }) => (
+          <div
+            key={_id}
+            className={`category ${isActive && "active-category"}`}
+            onClick={() => sortHandler(categoryName)}
+          >
+            {categoryName}
+          </div>
+        ))}
       </div>
 
       <div className="responsive-grid">
-        <VideoCard/>
+      {sortByCategory.map((video) => (
+          <VideoCard key={video.id} video={video} />
+        ))}
       </div>
     </div>
   );

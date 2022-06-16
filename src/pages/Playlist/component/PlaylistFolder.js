@@ -6,10 +6,10 @@ export default function PlaylistFolder() {
   const [showList, setShowList] = useState(false);
 
   return (
-    <div className="card">
+    <div className="card playlistFolder">
       <Link to="playlistList">
         <img
-          className="card-img"
+          className="card-img playlistFolder"
           src="https://i.ytimg.com/vi/KUJsaM-hAjs/sddefault.jpg"
           alt=""
         />
