@@ -56,7 +56,7 @@ export function Navbar() {
                 />
               ) : (
                 <i
-                  class="fa fa-sign-out"
+                  className="fa fa-sign-out"
                   aria-hidden="true"
                   onClick={() => navigate("/userProfile")}
                 ></i>

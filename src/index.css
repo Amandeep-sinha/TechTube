@@ -15,6 +15,7 @@
     --container-color: #222230;
     --container-color-dark: #34343d;
     --primary-color:green;
+    --danger-color: rgb(248, 45, 45);
     color: var(--font-color)
 }
 

@@ -1,13 +1,29 @@
 import React from "react";
 import "./SingleVideo.css";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate  } from "react-router-dom";
 import { useData } from "../../context/data/videoContext";
+import { useAuth } from "../../context/auth/authContext";
+import { watchLaterHandler } from "../../utils";
+import { addToLike } from "../../services";
+import { likeHandler } from "../../utils/likedUtils";
 
 export function SingleVideo() {
   const { videoId } = useParams();
-  const { videos } = useData();
+  const { videos, dispatch, setModal, setModelData } = useData();
+  const { token } = useAuth();
+  const navigate = useNavigate();
 
   const video = videos?.find((video) => video._id === videoId);
+  const isInWatchLater = video && video.isInWatchLater;
+  const isInLiked = video && video.isInLiked;
+  const addToPlaylist = () => {
+    if (token) {
+      setModal(true);
+      setModelData(video);
+    } else {
+      navigate("/login");
+    }
+  };
   return video ? (
     <div className="play-container">
       <iframe
@@ -26,15 +42,26 @@ export function SingleVideo() {
         </div>
 
         <div className="footer-btn-list">
-          <div>
+        <div
+            className={`${isInLiked ? "is-select" : "is-not-select"}`}
+            onClick={() =>
+              token ? likeHandler(dispatch, video, token) : navigate("/login")
+            }
+          >
             <i className="fa fa-thumbs-o-up" aria-hidden="true"></i>
-            <span>Like</span>
+            <span> {isInLiked ? "Liked" : "Like"}</span>
           </div>
-          <div>
+          <div className="is-not-select" onClick={() => addToPlaylist()}>
             <i className="fa fa-play-circle" aria-hidden="true"></i>
             <span>Save</span>
           </div>
-          <div>
+          <div className={`${isInWatchLater ? "is-select" : "is-not-select"}`}
+            onClick={() =>
+              token
+                ? watchLaterHandler(dispatch, video, token)
+                : navigate("/login")
+            }
+          >
             <i className="fa fa-clock-o" aria-hidden="true"></i>
             <span>Watch Later</span>
           </div>

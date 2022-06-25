@@ -1,20 +1,29 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/auth/authContext";
+import { useData } from "../../../context/data/videoContext";
+import { removeVideoFromPlaylist } from "../../../services";
+import { watchLaterHandler } from "../../../utils";
 
-export default function PlaylistCard() {
+export default function PlaylistCard({video, listId}) {
   const [showList, setShowList] = useState(false);
+  const { _id, title, creator } = video;
+  const { dispatch, videos } = useData();
+  const { token } = useAuth();
+  const navigate = useNavigate();
+  const isInWatchLater = videos.some(
+    (list) => list._id === _id && list.isInWatchLater
+  );
   return (
     <div className="card">
-      <Link to="singleVideo">
-        <img
-          className="card-img"
-          src="https://i.ytimg.com/vi/KUJsaM-hAjs/sddefault.jpg"
-          alt=""
-        />
-      </Link>
-      <div className="card-info">
+     <img
+        className="card-img"
+        src={`https://i.ytimg.com/vi/${_id}/0.jpg`}
+        onClick={() => navigate(`/${_id}`)}
+      />
+      <div className="card-info" title={title}>
         <div className="card-title">
-          <h3 className="card-title-header">First React App</h3>
+          <h3 className="card-title-header">{title}</h3>
           <div className="ellipse" onClick={() => setShowList(!showList)}>
             <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
             <div
@@ -22,15 +31,10 @@ export default function PlaylistCard() {
                 showList ? "display-flex" : "display-none"
               }`}
             >
-              <div>
-                <i className="fa fa-clock-o" aria-hidden="true"></i>
-                Add to Watch Later
-              </div>
-              <div>
-                <i className="fa fa-play-circle" aria-hidden="true"></i>
-                Add to Liked
-              </div>
-              <div>
+              <div  className="btn-trash"
+                onClick={() =>
+                  removeVideoFromPlaylist(dispatch, listId, _id, token)
+                }>
                 <i className="fa fa-trash" aria-hidden="true"></i>
                 Remove from Playlist
               </div>
@@ -39,7 +43,7 @@ export default function PlaylistCard() {
         </div>
 
         <div className="card-description">
-          <h3>Tanay Pratap : 5965467 view</h3>
+          <h3>{creator}</h3>
         </div>
       </div>
     </div>

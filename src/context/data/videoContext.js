@@ -9,10 +9,14 @@ import {
 import { ACTION_TYPE } from "../../utils/constant";
 import { initialState, videoReducer } from "../../reducer/videoReducer";
 
+
 const DataContext = createContext();
 
 const DataProvider = ({ children }) => {
   const [state, dispatch] = useReducer(videoReducer, initialState);
+
+  const [modal, setModal] = useState(false);
+  const [modalData, setModelData] = useState({});
 
   useEffect(() => {
     (async () => {
@@ -53,6 +57,8 @@ const DataProvider = ({ children }) => {
           sortBy: state.sortBy,
           dispatch: dispatch,
           search: state.search,
+          history: state.history,
+          playlist: state.playlist,modal,setModal,modalData,setModelData,
         }}
       >
         {children}

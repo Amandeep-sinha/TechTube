@@ -5,6 +5,8 @@ export const initialState = {
   category: [],
   sortBy: "",
   search: "",
+  playlist: [],
+  history: [],
 };
 
 export const videoReducer = (state, action) => {
@@ -28,14 +30,58 @@ export const videoReducer = (state, action) => {
             : { ...cat, isActive: false }
         ),
       };
-    case ACTION_TYPE.SEARCH:
+      case ACTION_TYPE.ADD_TO_HISTORY:
+      return {
+        ...state,
+        history: [...action.payload],
+      };
+    case ACTION_TYPE.REMOVE_FROM_HISTORY:
+      return {
+        ...state,
+        history: [...action.payload],
+      };
+    case ACTION_TYPE.CLEAR_HISTORY:
+      return {
+        ...state,
+        history: [...action.payload],
+      };
+      case ACTION_TYPE.WATCH_LATER:
+      return {
+        ...state,
+        videos: state.videos.map((video) => ({
+          ...video,
+          isInWatchLater: action.payload.some((ele) => ele._id === video._id),
+        })),
+      };
+      case ACTION_TYPE.LIKE:
+      return {
+        ...state,
+        videos: state.videos.map((video) => ({
+          ...video,
+          isInLiked: action.payload.some((ele) => ele._id === video._id),
+        })),
+      };
+      case ACTION_TYPE.SEARCH:
       return {
         ...state,
         search: action.payload,
+      };
+      case ACTION_TYPE.PLAYLIST:
+      return {
+        ...state,
+        playlist: action.payload,
+      };
+    case ACTION_TYPE.VIDEO_TO_PLAYLIST:
+      return {
+        ...state,
+        playlist: state.playlist.map((list) =>
+          list._id === action.payload._id ? action.payload : list
+        ),
       };
       case ACTION_TYPE.LOG_OUT:
       return {
         ...state,
       };
+      
   }
 };
