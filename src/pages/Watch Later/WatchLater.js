@@ -5,13 +5,13 @@ import { useNavigate } from "react-router-dom";
 import { WatchLaterCard } from "./WatchLaterCard";
 
 export function WatchLater() {
-  const { dispatch, videos } = useData();
+  const { dispatch, videos, drawer } = useData();
   const { token } = useAuth();
   const navigate = useNavigate();
   const watchLater = videos.filter((video) => video.isInWatchLater);
   const isWatchLaterFill = watchLater.length > 0;
   return (
-    <div className="video-list-container">
+    <div className={`video-list-container ${drawer && "disabled-click"}`}>
       <div className="container-title">
         <h3>Watch Later</h3>
         {isWatchLaterFill && (

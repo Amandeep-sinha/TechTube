@@ -1,17 +1,22 @@
 import "./App.css";
-import { Navbar, Sidebar, PlaylistModal } from "./component";
+import { Navbar, Sidebar, PlaylistModal, Loader } from "./component";
 import {History,Liked,Login,Playlist,Signup,SingleVideo,VideoListing,WatchLater,PlaylistList,UserProfile} from "./pages";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { PrivateRoute } from "./component/PrivateRoute/PrivateRoute";
+import { useData } from "./context/data/videoContext";
+import { useTheme } from "./context/theme/themeContext"
 
 
 function App() {
+  const { loader } = useData();
+  const {theme} = useTheme();
   return (
-    <div className="App">
+    <div className={`App ${theme === "light" ? "light-theme" : "default-theme"}`}>
       <PlaylistModal />
       <Router>
       <Navbar />
         <Sidebar />
+        {loader && <Loader/>}
         <Routes>
           <Route path="/" element={<VideoListing />} />
           <Route path="/:videoId" element={<SingleVideo />} />

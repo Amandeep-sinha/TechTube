@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../context/auth/authContext";
 import { useData } from "../../context/data/videoContext";
+import { MiniLoader } from "../Loader/MiniLoader";
 import {
   addVideoToPlaylist,
   createNewPlaylist,
@@ -14,6 +15,7 @@ export function PlaylistModal() {
   const [showInput, setShowInput] = useState(false);
   const { token } = useAuth();
   const [playlistName, setPlaylistName] = useState("");
+  const [miniLoader, setMiniLoader] = useState(false);
 
   const createHandler = (e) => {
     setShowInput(true);
@@ -36,11 +38,14 @@ export function PlaylistModal() {
             onClick={() => setModal(!modal)}
           />
         </div>
-        {playlist.length > 0 &&
+        {miniLoader ? (
+          <MiniLoader />
+        ) : (
+        playlist.length > 0 &&
           playlist.map((list) => {
             const isInPlaylist = list.videos?.some(
               (list) => list._id === modalData._id
-            );
+          );
             return (
               <div className="modal-header" key={list._id}>
                 <label className="select-input">
@@ -55,13 +60,15 @@ export function PlaylistModal() {
                             dispatch,
                             list._id,
                             modalData,
-                            token
+                            token,
+                            setMiniLoader
                           )
                         : removeVideoFromPlaylist(
                             dispatch,
                             list._id,
                             modalData._id,
-                            token
+                            token,
+                            setMiniLoader
                           )
                     }
                   />
@@ -69,7 +76,7 @@ export function PlaylistModal() {
                 </label>
               </div>
             );
-          })}
+          }))}
         <div
           className={`modal-input ${
             showInput ? "display-flex" : "display-none"

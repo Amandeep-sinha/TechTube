@@ -30,7 +30,7 @@ export function WatchLaterCard({video}) {
               }`}
             >
               <div>
-                <i className="fa fa-clock-o" aria-hidden="true"></i>
+                <i className="fa fa-heart" aria-hidden="true"></i>
                 Add to Liked
               </div>
               <div>

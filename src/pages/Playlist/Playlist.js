@@ -6,11 +6,11 @@ import { useNavigate } from "react-router-dom";
 import "./Playlist.css";
 
 export function Playlist() {
-  const { playlist } = useData();
+  const { playlist, drawer } = useData();
   const isPlaylistFill = playlist.length > 0;
   const navigate = useNavigate();
   return (
-    <div className="video-list-container">
+    <div className={`video-list-container ${drawer && "disabled-click"}`}>
       <div className="container-title">
       <h3>Your Playlist</h3>
         {isPlaylistFill && (

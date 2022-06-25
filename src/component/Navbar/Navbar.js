@@ -5,12 +5,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useData } from "../../context/data/videoContext";
 import { ACTION_TYPE } from "../../utils";
 import { useAuth } from "../../context/auth/authContext";
+import { useTheme } from "../../context/theme/themeContext";
 export function Navbar() {
 
   const [input, setInput] = useState("");
   const { token } = useAuth();
   const navigate = useNavigate();
-  const { dispatch } = useData();
+  const { dispatch, setDrawer, drawer } = useData();
+  const { changeTheme } = useTheme();
   const searchHandler = (e) => {
     if (e.key === "Enter" || e.keyCode === 8 || e.target.value === "")
       dispatch({
@@ -23,8 +25,15 @@ export function Navbar() {
       <ul className="navbar">
         <div className="navbar-main ">
           <div className="navbar-left">
+          <i
+              className="fa fa-bars drawer-hamberg-btn"
+              aria-hidden="true"
+              onClick={() => setDrawer(!drawer)}
+            />
+            <div className="logo-wrapper flex-center" onClick={() => navigate("/")}>
             <img className="logo" src={logo} />
-            <h2> TechTube</h2>
+            <h2 className="nav-header-icon"> TechTube</h2>
+            </div>
           </div>
           <div className="search-container">
             <i className="fa fa-search" aria-hidden="true"></i>
@@ -40,14 +49,20 @@ export function Navbar() {
           </div>
           <ul className="navbar-right">
             
-            <li className="login">
-            <Link to="home"><i className="fa fa-home" aria-hidden="true"></i></Link>
+            <li className="login nav-header-icon">
+            <Link to="/"><i className="fa fa-home" aria-hidden="true"></i></Link>
             </li>
-            <li className="login">
-            <Link to="history"><i className="fa fa-clock-o" aria-hidden="true"></i></Link>
+            <li className="login nav-header-icon">
+            <Link to="watchlater"><i className="fa fa-clock-o" aria-hidden="true"></i></Link>
             </li>
-            
-            <li className="login">
+            <li className="nav-header-icon">
+              <i
+                className= "fa fa-moon-o nav-header-icon"
+                aria-hidden="true"
+                onClick={() => changeTheme()}
+              />
+            </li>
+            <li className="login nav-header-icon">
             {!token ? (
                 <i
                   className="fa fa-user-circle-o"
