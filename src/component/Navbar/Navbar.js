@@ -1,6 +1,7 @@
 import React from "react";
 import "./Navbar.css";
 import logo from "../../assets/logo.png";
+import { Link } from "react-router-dom";
 export function Navbar() {
   return (
     <div className="nav-header">
@@ -23,14 +24,14 @@ export function Navbar() {
           <ul className="navbar-right">
             
             <li className="login">
-              <i className="fa fa-home" aria-hidden="true"></i>
+            <Link to="home"><i className="fa fa-home" aria-hidden="true"></i></Link>
             </li>
             <li className="login">
-              <i className="fa fa-clock-o" aria-hidden="true"></i>
+            <Link to="history"><i className="fa fa-clock-o" aria-hidden="true"></i></Link>
             </li>
             
             <li className="login">
-              <i className="fa fa-user" aria-hidden="true"></i>
+            <Link to="login"><i className="fa fa-user" aria-hidden="true"></i></Link>
             </li>
           </ul>
         </div>
