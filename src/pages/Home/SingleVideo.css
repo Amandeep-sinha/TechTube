@@ -1,11 +1,16 @@
 .play-container {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     gap: 1rem;
     padding: 1rem 4rem;
     margin-left: 250px;
 }
+
+.play-container iframe{
+    height: calc(75vh - 72px);
+}
+
 
 .video-footer {
     display: flex;
@@ -68,6 +73,9 @@
 @media screen and (max-width:500px) {
     .play-container {
         padding: 1rem;
+    }
+    .play-container iframe{
+        height: calc(50vh - 106px);
     }
 
     .footer-btn-list {

@@ -1,22 +1,21 @@
 import React, { useState } from "react";
 import "./VideoCard.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 
-export default function VideoCard() {
+  export default function VideoCard({ video }) {
+  const navigate = useNavigate();
   const [showList, setShowList] = useState(false);
-
+  const { _id, title, creator } = video;  
   return (
     <div className="card">
-      <Link to="singleVideo">
-        <img
-          className="card-img"
-          src="https://i.ytimg.com/vi/KUJsaM-hAjs/sddefault.jpg"
-          alt=""
-        />
-      </Link>
-      <div className="card-info">
+      <img
+        className="card-img"
+        src={`https://i.ytimg.com/vi/${_id}/0.jpg`}
+        onClick={() => navigate(`/${_id}`)}
+      />
+      <div className="card-info" title={title}>
         <div className="card-title">
-          <h3 className="card-title-header">First React App</h3>
+          <h3 className="card-title-header">{title}</h3>
           <div className="ellipse" onClick={() => setShowList(!showList)}>
             <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
             <div
@@ -37,7 +36,7 @@ export default function VideoCard() {
         </div>
 
         <div className="card-description">
-          <h3>Ankur Warikoo : 475749view</h3>
+          <h3>{creator}</h3>
         </div>
       </div>
     </div>

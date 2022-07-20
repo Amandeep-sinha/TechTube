@@ -1,13 +1,19 @@
 import React from "react";
 import "./SingleVideo.css";
+import { useParams } from "react-router-dom";
+import { useData } from "../../context/data/videoContext";
 
 export function SingleVideo() {
-  return (
+  const { videoId } = useParams();
+  const { videos } = useData();
+
+  const video = videos?.find((video) => video._id === videoId);
+  return video ? (
     <div className="play-container">
       <iframe
         width="100%"
         height="100%"
-        src="https://www.youtube.com/embed/KUJsaM-hAjs"
+        src={`https://www.youtube.com/embed/${video._id}`}
         title="TechTube video player"
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -15,8 +21,8 @@ export function SingleVideo() {
       ></iframe>
       <div className="video-footer">
         <div className="footer-title">
-          <h2>First react app</h2>
-          <h5>Tanay Pratap</h5>
+          <h2>{video.title}</h2>
+          <h5>{video.creator}</h5>
         </div>
 
         <div className="footer-btn-list">
@@ -37,11 +43,11 @@ export function SingleVideo() {
           <h4>Description :</h4>
           <div>
             <p>
-              In this video, you will create a react app from scratch, wihch you can add in your portfolio as a project.
+              {video.description}
             </p>
           </div>
         </div>
       </div>
     </div>
-  );
+  ) : (<> </>);
 }

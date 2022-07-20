@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useState }  from "react";
 import "./Navbar.css";
 import logo from "../../assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useData } from "../../context/data/videoContext";
+import { ACTION_TYPE } from "../../utils";
+import { useAuth } from "../../context/auth/authContext";
 export function Navbar() {
+
+  const [input, setInput] = useState("");
+  const { token } = useAuth();
+  const navigate = useNavigate();
+  const { dispatch } = useData();
+  const searchHandler = (e) => {
+    if (e.key === "Enter" || e.keyCode === 8 || e.target.value === "")
+      dispatch({
+        type: ACTION_TYPE.SEARCH,
+        payload: e.target.value,
+      });
+  };
   return (
     <div className="nav-header">
       <ul className="navbar">
@@ -17,8 +32,10 @@ export function Navbar() {
               type="text"
               name="search"
               className="search-bar"
-              placeholder="Search video"
-              id=""
+              value={input}
+              placeholder="Search for Videos"
+              onKeyDown={(e) => searchHandler(e)}
+              onChange={(e) => setInput(e.target.value)}
             />
           </div>
           <ul className="navbar-right">
@@ -31,7 +48,19 @@ export function Navbar() {
             </li>
             
             <li className="login">
-            <Link to="login"><i className="fa fa-user" aria-hidden="true"></i></Link>
+            {!token ? (
+                <i
+                  className="fa fa-user-circle-o"
+                  aria-hidden="true"
+                  onClick={() => navigate("/login")}
+                />
+              ) : (
+                <i
+                  class="fa fa-sign-out"
+                  aria-hidden="true"
+                  onClick={() => navigate("/userProfile")}
+                ></i>
+              )}
             </li>
           </ul>
         </div>
@@ -41,8 +70,10 @@ export function Navbar() {
             type="text"
             name="search"
             className="search-bar"
-            placeholder="Search product"
-            id=""
+            value={input}
+            placeholder="Search for Videos"
+            onKeyDown={(e) => searchHandler(e)}
+            onChange={(e) => setInput(e.target.value)}
           />
         </div>
       </ul>
