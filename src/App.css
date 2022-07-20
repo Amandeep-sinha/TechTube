@@ -71,7 +71,7 @@
   background: var(--container-color-dark);
 }
 
-.option-list div .fa {
+ .fa {
   margin-right: 5px;
 }
 
@@ -87,6 +87,35 @@
   padding: 1rem 0;
   grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
   grid-gap: 3rem;
+}
+
+.message-container {
+  flex-direction: column;
+  height: calc(100vh - 144px);
+  gap: 1rem
+}
+
+.btn-start-watch {
+  background: var(--primary-color);
+}
+
+.btn-trash {
+  color: var(--danger-color)
+}
+
+.btn-clear {
+  padding: 5px 10px
+}
+
+.container-title-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.wd-inherit{
+  width: 100%;
 }
 
 @media screen and (max-width: 1450px) {
@@ -117,6 +146,10 @@
       width: 100%;
   }
 
+  .container-title {
+    width: 90%;
+}
+
   .card {
       width: 18rem;
       cursor: default
@@ -136,6 +169,19 @@
 
   .responsive-grid {
     grid-gap: 3rem;
+}
+
+.btn-clear {
+  padding: 0px 3px;
+  font-size: 15px;
+}
+
+.btn-clear .fa {
+  margin-right: 0;
+}
+
+.btn-clear span {
+  display: none;
 }
 
 }
