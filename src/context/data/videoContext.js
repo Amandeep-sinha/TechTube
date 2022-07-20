@@ -9,7 +9,6 @@ import {
 import { ACTION_TYPE } from "../../utils/constant";
 import { initialState, videoReducer } from "../../reducer/videoReducer";
 
-
 const DataContext = createContext();
 
 const DataProvider = ({ children }) => {
@@ -17,7 +16,8 @@ const DataProvider = ({ children }) => {
 
   const [modal, setModal] = useState(false);
   const [modalData, setModelData] = useState({});
-
+  const [loader, setLoader] = useState(false);
+  const [drawer, setDrawer] = useState(false);
   useEffect(() => {
     (async () => {
       try {
@@ -58,7 +58,8 @@ const DataProvider = ({ children }) => {
           dispatch: dispatch,
           search: state.search,
           history: state.history,
-          playlist: state.playlist,modal,setModal,modalData,setModelData,
+          playlist: state.playlist,modal,setModal,modalData,setModelData,loader,setLoader,drawer,
+          setDrawer,
         }}
       >
         {children}

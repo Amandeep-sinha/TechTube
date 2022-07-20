@@ -6,7 +6,7 @@
     margin: 0;
 }
 
-:root {
+.default-theme {
     --font-color: #e8e6e3;
     --font-color-2: #b2aca2;
     --bg-color: #141319;
@@ -16,15 +16,27 @@
     --container-color-dark: #34343d;
     --primary-color:green;
     --danger-color: rgb(248, 45, 45);
-    color: var(--font-color)
+    --icon-color: var(--white);
+    color: var(--font-color);
 }
 
+.light-theme {
+  --font-color: #0e0e0d;
+  --bg-color: #eaeaea;
+  --navbar-color: #dbdbdb;
+  --navbar-color-dark: #f4f4f4;
+  --container-color: #dadada;
+  --container-color-dark: #cecece;
+  --primary-color:green;
+    --danger-color: rgb(248, 45, 45);
+    --icon-color: var(--font-color);
+    color: var(--font-color);
+}
 
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: var(--bg-color);
   font-family: 'Encode Sans', sans-serif;
   letter-spacing:0.5px;
 }

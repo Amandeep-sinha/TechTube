@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Auth.css";
 import { useAuth } from "../../context/auth/authContext";
+import { useData } from "../../context/data/videoContext";
 export function Login() {
   const [loginForm, setLoginForm] = useState({
     email: "",
@@ -9,7 +10,7 @@ export function Login() {
   });
   const navigate = useNavigate();
   const { token, loginUser } = useAuth();
-
+  const { setLoader } = useData();
   useEffect(() => {
     (async () => {
       loginUser(loginForm.email, loginForm.password);
@@ -17,7 +18,11 @@ export function Login() {
   }, [loginForm.email, loginForm.password]);
 
   if (token) {
-    navigate("/");
+    setLoader(true);
+    setTimeout(() => {
+      navigate("/");
+      setLoader(false);
+    }, 1000);
   }
 
   const loginHandler = () => {

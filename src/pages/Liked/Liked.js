@@ -4,12 +4,12 @@ import { useData } from "../../context/data/videoContext";
 import { useNavigate } from "react-router-dom";
 
 export function Liked() {
-  const { videos } = useData();
+  const { videos, drawer } = useData();
   const navigate = useNavigate();
   const like = videos.filter((video) => video.isInLiked);
   const isLikedFill = like.length > 0;
   return (
-    <div className="video-list-container">
+    <div className={`video-list-container ${drawer && "disabled-click"}`}>
       <div className="container-title">
       <h3>Like</h3>
         {isLikedFill && (

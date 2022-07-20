@@ -7,7 +7,7 @@ import "./UserProfile.css";
 
 export function UserProfile() {
   const { user, setUser, setToken } = useAuth();
-  const { dispatch } = useData();
+  const { dispatch, setLoader } = useData();
   const { firstName, lastName, email } = user;
   const navigate = useNavigate();
 
@@ -21,6 +21,10 @@ export function UserProfile() {
 
     setUser();
     setToken("");
+    setLoader(true);
+    setTimeout(() => {
+      setLoader(false);
+    }, 1000);
     navigate("/");
   };
   return (
